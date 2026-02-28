@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+
+# 虚拟环境
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# 敏感文件
+state.json
+*.png
+screenshots/
+
+# 日志
+*.log
+
+# 系统文件
+.DS_Store
