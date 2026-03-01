@@ -1,0 +1,11 @@
+# 🫘 小豆豆 Tekla License 定时任务（加拿大东部时间）
+# 每天晚上 8 点（加拿大时间）切给 Auger - 加拿大办公室早上 8 点开始工作
+# 每天早上 9 点（中国时间）切给 Leo - 中国办公室早上 9 点开始工作
+
+# 每天晚上 8 点（加拿大东部时间 20:00）切给 Auger
+0 20 * * * cd /Users/bear/.openclaw/workspace/tekla-license && /Users/bear/.openclaw/workspace/tekla-license/xiaodoudou-tekla.sh --auger >> /Users/bear/.openclaw/workspace/tekla-license/logs/tekla-$(date +\%Y\%m\%d)-2000.log 2>&1
+
+# 每天早上 9 点（中国时间 9:00 = 加拿大东部时间前一天 20:00/当天 21:00 取决于夏令时）
+# 实际上加拿大东部时间 21:00 对应中国时间次日 10:00（冬令时）或 9:00（夏令时）
+# 这里设置为加拿大东部时间 21:00，对应中国早上 9-10 点
+0 21 * * * cd /Users/bear/.openclaw/workspace/tekla-license && /Users/bear/.openclaw/workspace/tekla-license/xiaodoudou-tekla.sh --leo >> /Users/bear/.openclaw/workspace/tekla-license/logs/tekla-$(date +\%Y\%m\%d)-2100.log 2>&1

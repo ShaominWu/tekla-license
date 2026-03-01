@@ -6,6 +6,7 @@ Tekla License 自动切换 - OpenClaw 专属技能
 
 import sys
 import os
+from datetime import datetime
 from playwright.sync_api import sync_playwright
 
 def switch_tekla_license(target_user):
@@ -14,7 +15,8 @@ def switch_tekla_license(target_user):
     print(f"🎯 OpenClaw 任务：将许可切换给 {target_user}...")
     
     # 检查通行证文件
-    state_file = "/home/wuyongjie/.openclaw/agents/Office-Automa/state.json"
+    workspace_dir = os.path.dirname(os.path.abspath(__file__))
+    state_file = os.path.join(workspace_dir, "state.json")
     if not os.path.exists(state_file):
         print(f"❌ 错误：找不到通行证文件 {state_file}")
         print("   请先运行: python3 1_save_auth.py")
@@ -91,7 +93,9 @@ def switch_tekla_license(target_user):
                 pass  # 可能没有Save按钮，自动保存
             
             # 截图确认
-            screenshot_path = f"/home/wuyongjie/.openclaw/agents/Office-Automa/screenshots/switch_{target_user.lower()}_{os.path.basename(__file__)}.png"
+            screenshot_dir = os.path.join(workspace_dir, "screenshots")
+            os.makedirs(screenshot_dir, exist_ok=True)
+            screenshot_path = os.path.join(screenshot_dir, f"switch_{target_user.lower()}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.png")
             page.screenshot(path=screenshot_path)
             print(f"   📸 已保存截图: {screenshot_path}")
             
@@ -99,7 +103,9 @@ def switch_tekla_license(target_user):
             
         except Exception as e:
             print(f"\n❌ 自动化过程出错: {e}")
-            error_screenshot = "/home/wuyongjie/.openclaw/agents/Office-Automa/screenshots/error.png"
+            screenshot_dir = os.path.join(workspace_dir, "screenshots")
+            os.makedirs(screenshot_dir, exist_ok=True)
+            error_screenshot = os.path.join(screenshot_dir, f"error_{datetime.now().strftime('%Y%m%d_%H%M%S')}.png")
             page.screenshot(path=error_screenshot)
             print(f"   📸 错误截图: {error_screenshot}")
             return False

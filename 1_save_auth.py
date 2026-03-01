@@ -26,10 +26,12 @@ def save_login_state():
         input("✅ 确认已登录成功并看到 Licenses 页面后，按回车继续...")
         
         # 保存登录状态到文件
-        state_file = "/home/wuyongjie/.openclaw/agents/Office-Automa/state.json"
+        import os
+        workspace_dir = os.path.dirname(os.path.abspath(__file__))
+        state_file = os.path.join(workspace_dir, "state.json")
         context.storage_state(path=state_file)
         print(f"\n✅ 登录通行证已保存: {state_file}")
-        print("   OpenClaw 以后可以直接使用，无需再次登录！")
+        print("   小豆豆以后可以直接使用，无需再次登录！")
         
         browser.close()
 
