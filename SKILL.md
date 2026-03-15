@@ -295,4 +295,93 @@ tar -czf tekla-license-backup-$(date +%Y%m%d).tar.gz \
 
 ---
 
-*版本: 2026.03.01 | 作者: Shaomin Wu | 助手: 小豆豆 🫘*
+## 🆕 Agent-Browser 手动操作指南
+
+当自动化脚本失效时，可以使用 agent-browser 进行半自动操作：
+
+### 登录流程
+
+```bash
+# 1. 打开浏览器（显示界面）
+agent-browser open https://admin.account.tekla.com/ --headed
+
+# 2. 输入邮箱
+agent-browser type "[ref=邮箱输入框]" "jt@morissetconstruction.com"
+agent-browser click "下一步"
+
+# 3. 输入密码
+agent-browser type "[ref=密码输入框]" "Jacobe@1926"
+agent-browser click "登录"
+
+# 4. 输入邮箱验证码（需要手动查看邮箱）
+agent-browser type "[ref=验证码输入框]" "XXXXXX"
+agent-browser click "继续"
+```
+
+### License 切换步骤
+
+1. **关闭引导教程**
+   ```bash
+   agent-browser click "Close the guide"
+   ```
+
+2. **进入 Licenses 页面**
+   ```bash
+   agent-browser click "Licenses"
+   ```
+
+3. **展开 Diamond License**
+   ```bash
+   agent-browser click "Tekla Structures Diamond - Named User"
+   ```
+
+4. **滚动到 Assignments 部分**
+   ```bash
+   agent-browser scroll down 500
+   ```
+
+5. **展开 Assignments**
+   ```bash
+   agent-browser click "Assignments"
+   ```
+
+6. **显示所有用户**
+   ```bash
+   agent-browser check "Show all users"
+   ```
+
+7. **取消勾选当前用户**
+   ```bash
+   agent-browser uncheck "Lee, Leo"
+   ```
+
+8. **勾选目标用户**
+   ```bash
+   agent-browser check "Auger-Dostaler, Louis-Simon"
+   ```
+
+9. **截图确认**
+   ```bash
+   agent-browser screenshot ./switch_complete.png
+   ```
+
+### 用户列表
+
+| 用户 | 邮箱 | 地区 |
+|------|------|------|
+| Auger-Dostaler, Louis-Simon | louis-simon@morissetconstruction.com | 🇨🇦 加拿大 |
+| Lee, Leo | leodetailing@163.com | 🇨🇳 中国 |
+| Qin, Vivian | vivian_23cd@163.com | - |
+| Moreau, David | david@morissetconstruction.com | - |
+| Morisset, Jean-Thomas | jt@morissetconstruction.com | Admin |
+
+### 切换逻辑
+
+- Diamond License 有 **2 个座位**
+- 当前分配：**Auger + Vivian** 或 **Leo + Vivian**
+- 切换时：取消一个用户，添加另一个用户
+- 系统自动保存，无需手动点击 Save
+
+---
+
+*版本: 2026.03.15 | 作者: Shaomin Wu | 助手: 小豆豆 🫘*
